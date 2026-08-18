@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelVault — Photo Platform</title>
+
+<!-- ── Stylesheets (order matters) ── -->
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/layout.css">
+
+<!-- ── Favicon ── -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='28'>📷</text></svg>">
+</head>
+<body>
+
+<!-- ████████████████████████████████████████
+     LANDING PAGE
+     ████████████████████████████████████████ -->
+<div id="page-landing" class="page active">
+  <nav class="landing-nav">
+    <div class="logo">PixelVault</div>
+    <div class="nav-actions">
+      <button class="btn btn-ghost btn-sm" onclick="UI.openModal('auth-modal');Auth.switchPanel('login')">Sign in</button>
+      <button class="btn btn-primary btn-sm" onclick="UI.openModal('auth-modal');Auth.switchPanel('signup')">Get started free</button>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-eyebrow">✦ Multi-source Photo Platform</div>
+    <h1 class="hero-title">
+      Discover, Upload &amp;<br>
+      <span class="gradient-text">Manage Every Photo</span>
+    </h1>
+    <p class="hero-desc">
+      Millions of photos from Pexels, Unsplash &amp; Pixabay — or upload your own.
+      One unified platform for every visual need.
+    </p>
+    <div class="hero-cta">
+      <button class="btn btn-primary" style="padding:0.75rem 1.75rem;font-size:0.95rem;" onclick="UI.openModal('auth-modal');Auth.switchPanel('signup')">
+        Start for free →
+      </button>
+      <button class="btn btn-ghost" style="padding:0.75rem 1.5rem;font-size:0.95rem;" onclick="UI.openModal('auth-modal');Auth.switchPanel('login')">
+        Sign in
+      </button>
+    </div>
+    <p style="margin-top:1rem;font-size:0.75rem;color:var(--text-muted);">Demo: demo@pixelvault.app / demo123</p>
+  </section>
+
+  <section class="features-section">
+    <p class="section-label">Everything you need</p>
+    <h2 class="section-title">Built for photographers &amp; creators</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon-wrap" style="background:var(--brand-dim);color:var(--brand-light);">🌐</div>
+        <h3>Unified feed</h3>
+        <p>Pexels, Unsplash &amp; Pixabay in one seamless grid with smart filtering.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap" style="background:var(--teal-dim);color:var(--teal);">☁️</div>
+        <h3>Cloud upload</h3>
+        <p>Upload your own photos with tags, descriptions, and categories.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap" style="background:rgba(255,95,126,0.12);color:var(--coral);">❤️</div>
+        <h3>Favorites</h3>
+        <p>Bookmark photos from any source into your personal collection.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap" style="background:rgba(245,166,35,0.12);color:var(--amber);">⬇️</div>
+        <h3>Downloads</h3>
+        <p>Download photos in original quality, instantly, from any source.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap" style="background:rgba(56,189,248,0.12);color:var(--sky);">🔐</div>
+        <h3>Secure accounts</h3>
+        <p>JWT-based auth with personal dashboards and profile management.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon-wrap" style="background:var(--brand-dim);color:var(--brand-light);">🏷️</div>
+        <h3>Smart search</h3>
+        <p>Filter by source, orientation, category, and custom tags instantly.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     AUTH MODAL
+     ████████████████████████████████████████ -->
+<div id="auth-modal" class="modal-backdrop">
+  <div class="modal" style="max-width:400px;">
+    <button class="modal-close" onclick="UI.closeModal('auth-modal')">✕</button>
+
+    <!-- Login panel -->
+    <div id="auth-panel-login">
+      <div class="modal-title">Welcome back</div>
+      <div class="modal-sub">Sign in to your PixelVault account</div>
+      <div id="login-error" class="alert alert-error"></div>
+      <form id="login-form">
+        <div class="form-group">
+          <label>Email</label>
+          <input id="login-email" type="email" class="form-control" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input id="login-pass" type="password" class="form-control" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Sign in</button>
+      </form>
+      <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:1rem;">
+        No account? <a data-switch-auth="signup" style="color:var(--brand-light);cursor:pointer;">Create one free →</a>
+      </p>
+    </div>
+
+    <!-- Signup panel -->
+    <div id="auth-panel-signup" style="display:none;">
+      <div class="modal-title">Create account</div>
+      <div class="modal-sub">Join PixelVault — free forever</div>
+      <div id="signup-error" class="alert alert-error"></div>
+      <form id="signup-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name *</label>
+            <input id="su-fname" type="text" class="form-control" placeholder="Alex" autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input id="su-lname" type="text" class="form-control" placeholder="Kim" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input id="su-email" type="email" class="form-control" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password * <span style="color:var(--text-muted);font-size:0.72rem;">(min 6 chars)</span></label>
+          <input id="su-pass" type="password" class="form-control" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Create account</button>
+      </form>
+      <p style="text-align:center;font-size:0.8rem;color:var(--text-muted);margin-top:1rem;">
+        Already a member? <a data-switch-auth="login" style="color:var(--brand-light);cursor:pointer;">Sign in →</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     DASHBOARD
+     ████████████████████████████████████████ -->
+<div id="page-dashboard" class="page">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo" style="font-size:1.15rem;">PixelVault</div>
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip">
+        <div class="user-avatar dyn-avatar">?</div>
+        <span id="topbar-username" style="font-size:0.8rem;"></span>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="Auth.logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="dash-body">
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <p class="sidebar-section-label">Discover</p>
+      <div class="nav-item active" data-tab="explore" onclick="UI.switchTab('explore',this);Explore.load()">
+        <span class="nav-icon">🔍</span> Explore
+      </div>
+
+      <p class="sidebar-section-label">My Work</p>
+      <div class="nav-item" data-tab="upload" onclick="UI.switchTab('upload',this)">
+        <span class="nav-icon">⬆️</span> Upload
+      </div>
+      <div class="nav-item" data-tab="gallery" onclick="UI.switchTab('gallery',this);Gallery.render()">
+        <span class="nav-icon">🗂️</span> My Gallery
+        <span class="nav-badge" id="gallery-badge" style="display:none;"></span>
+      </div>
+      <div class="nav-item" data-tab="favorites" onclick="UI.switchTab('favorites',this);Favorites.render()">
+        <span class="nav-icon">❤️</span> Favorites
+      </div>
+
+      <p class="sidebar-section-label">Account</p>
+      <div class="nav-item" data-tab="overview" onclick="UI.switchTab('overview',this);App.updateStats();App.renderOverviewRecent()">
+        <span class="nav-icon">📊</span> Overview
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar dyn-avatar">?</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="sb-user-name">User</div>
+            <div class="sidebar-user-email" id="sb-user-email">—</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main content ── -->
+    <main class="main">
+
+      <!-- ══ EXPLORE ══ -->
+      <div id="tab-explore" class="tab-view active">
+        <div class="page-header">
+          <h1>Explore</h1>
+        </div>
+        <div class="toolbar">
+          <div class="search-bar" style="flex:1;max-width:320px;">
+            <span class="icon">🔍</span>
+            <input id="explore-search" placeholder="Search photos…" oninput="Explore.debounce()">
+          </div>
+          <select class="select-control" id="explore-source" onchange="Explore.load()">
+            <option value="all">All sources</option>
+            <option value="pexels">Pexels</option>
+            <option value="unsplash">Unsplash</option>
+            <option value="pixabay">Pixabay</option>
+            <option value="mine">My uploads</option>
+          </select>
+          <select class="select-control" id="explore-orient" onchange="Explore.load()">
+            <option value="">Any orientation</option>
+            <option value="landscape">Landscape</option>
+            <option value="portrait">Portrait</option>
+          </select>
+        </div>
+        <div class="tag-row">
+          <span class="tag-pill active" onclick="Explore.setTag('',this)">All</span>
+          <span class="tag-pill" onclick="Explore.setTag('nature',this)">🌿 Nature</span>
+          <span class="tag-pill" onclick="Explore.setTag('architecture',this)">🏛️ Architecture</span>
+          <span class="tag-pill" onclick="Explore.setTag('people',this)">👥 People</span>
+          <span class="tag-pill" onclick="Explore.setTag('travel',this)">✈️ Travel</span>
+          <span class="tag-pill" onclick="Explore.setTag('technology',this)">💻 Technology</span>
+          <span class="tag-pill" onclick="Explore.setTag('animals',this)">🐾 Animals</span>
+          <span class="tag-pill" onclick="Explore.setTag('abstract',this)">🎨 Abstract</span>
+          <span class="tag-pill" onclick="Explore.setTag('food',this)">🍜 Food</span>
+        </div>
+        <div id="explore-grid" class="photo-grid"></div>
+        <button class="load-more-btn" onclick="Explore.loadMore()">
+          <span>↓</span> Load more photos
+        </button>
+      </div>
+
+      <!-- ══ UPLOAD ══ -->
+      <div id="tab-upload" class="tab-view">
+        <div class="page-header"><h1>Upload Photo</h1></div>
+
+        <div class="upload-zone" id="drop-zone">
+          <div class="upload-icon">📁</div>
+          <h3>Click or drag &amp; drop your photo here</h3>
+          <p>JPG, PNG, GIF, WebP · Max 10 MB</p>
+        </div>
+        <input type="file" id="file-input" accept="image/*" style="display:none">
+
+        <div class="img-preview-wrap">
+          <img id="img-preview" class="img-preview" alt="Preview">
+        </div>
+
+        <div class="upload-form-card">
+          <div class="form-group">
+            <label>Title *</label>
+            <input id="up-title" type="text" class="form-control" placeholder="My awesome photo">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="up-desc" class="form-control" placeholder="What is this photo about?"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tags <span style="color:var(--text-muted);font-size:0.72rem;">(comma-separated)</span></label>
+              <input id="up-tags" type="text" class="form-control" placeholder="sunset, sky, nature">
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="up-cat" class="form-control">
+                <option>Nature</option><option>Architecture</option><option>People</option>
+                <option>Travel</option><option>Technology</option><option>Abstract</option>
+                <option>Animals</option><option>Food</option><option>Sports</option><option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="progress" id="upload-progress">
+            <div class="progress-fill" id="upload-fill"></div>
+          </div>
+          <p id="upload-status" style="font-size:0.8rem;color:var(--text-muted);margin-top:0.4rem;text-align:center;min-height:1.2em;"></p>
+
+          <button class="btn btn-primary btn-full" onclick="Upload.submit()" style="margin-top:0.5rem;">
+            ⬆️ Upload Photo
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ MY GALLERY ══ -->
+      <div id="tab-gallery" class="tab-view">
+        <div class="page-header">
+          <h1>My Gallery</h1>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <div class="search-bar" style="width:200px;">
+              <span class="icon">🔍</span>
+              <input id="gallery-search" placeholder="Search uploads…" oninput="Gallery.render()">
+            </div>
+            <select class="select-control" id="gallery-cat" onchange="Gallery.render()">
+              <option value="">All categories</option>
+              <option>Nature</option><option>Architecture</option><option>People</option>
+              <option>Travel</option><option>Technology</option><option>Abstract</option>
+              <option>Animals</option><option>Food</option><option>Sports</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div id="gallery-grid" class="photo-grid"></div>
+      </div>
+
+      <!-- ══ FAVORITES ══ -->
+      <div id="tab-favorites" class="tab-view">
+        <div class="page-header"><h1>Favorites</h1></div>
+        <div id="favorites-grid" class="photo-grid"></div>
+      </div>
+
+      <!-- ══ OVERVIEW ══ -->
+      <div id="tab-overview" class="tab-view">
+        <div class="page-header"><h1>Overview</h1></div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--brand-dim);">📤</div>
+            <div class="stat-label">My Uploads</div>
+            <div class="stat-value" id="stat-uploads" style="color:var(--brand-light);">0</div>
+            <div class="stat-sub">photos uploaded</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(255,95,126,0.12);">❤️</div>
+            <div class="stat-label">Favorites</div>
+            <div class="stat-value" id="stat-favs" style="color:var(--coral);">0</div>
+            <div class="stat-sub">saved photos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:var(--teal-dim);">⬇️</div>
+            <div class="stat-label">Downloads</div>
+            <div class="stat-value" id="stat-dl" style="color:var(--teal);">0</div>
+            <div class="stat-sub">this session</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:rgba(245,166,35,0.12);">🌐</div>
+            <div class="stat-label">API Sources</div>
+            <div class="stat-value" style="color:var(--amber);">3</div>
+            <div class="stat-sub">Pexels · Unsplash · Pixabay</div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="section-card-title">📷 Recent uploads</div>
+          <div id="overview-recent-grid" class="photo-grid"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     LIGHTBOX
+     ████████████████████████████████████████ -->
+<div id="lightbox">
+  <button class="lb-close" id="lb-close-btn">✕ Close</button>
+  <button class="lb-nav" id="lb-prev">‹</button>
+  <button class="lb-nav" id="lb-next">›</button>
+
+  <div class="lb-img-wrap">
+    <img id="lb-img" src="" alt="">
+  </div>
+  <div class="lb-meta">
+    <div class="lb-title" id="lb-title"></div>
+    <div class="lb-info"  id="lb-info"></div>
+    <div class="lb-actions">
+      <button class="btn btn-primary btn-sm" id="lb-dl-btn">⬇️ Download</button>
+      <button class="btn btn-ghost btn-sm"   id="lb-fav-btn">♡ Favorite</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     EDIT MODAL
+     ████████████████████████████████████████ -->
+<div id="edit-modal" class="modal-backdrop">
+  <div class="modal">
+    <button class="modal-close" onclick="UI.closeModal('edit-modal')">✕</button>
+    <div class="modal-title">Edit photo info</div>
+    <div class="modal-sub">Update metadata for your upload</div>
+    <input type="hidden" id="edit-id">
+    <div class="form-group"><label>Title</label><input id="edit-title" type="text" class="form-control"></div>
+    <div class="form-group"><label>Description</label><textarea id="edit-desc" class="form-control"></textarea></div>
+    <div class="form-group"><label>Tags <span style="color:var(--text-muted);font-size:0.72rem;">(comma-separated)</span></label><input id="edit-tags" type="text" class="form-control"></div>
+    <div class="form-group">
+      <label>Category</label>
+      <select id="edit-cat" class="form-control">
+        <option>Nature</option><option>Architecture</option><option>People</option>
+        <option>Travel</option><option>Technology</option><option>Abstract</option>
+        <option>Animals</option><option>Food</option><option>Sports</option><option>Other</option>
+      </select>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="Gallery.saveEdit()">Save changes</button>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     TOAST CONTAINER
+     ████████████████████████████████████████ -->
+<div class="toast-container" id="toast-container"></div>
+
+
+<!-- ████████████████████████████████████████
+     SCRIPTS (load order matters)
+     ████████████████████████████████████████ -->
+<script src="js/store.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+/* ════════════════════════════════════════
+   PIXELVAULT — Design Tokens & Variables
+   ════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&display=swap');
+
+:root {
+  /* — Backgrounds — */
+  --bg-base:        #080810;
+  --bg-surface:     #0f0f1a;
+  --bg-raised:      #161625;
+  --bg-overlay:     #1e1e32;
+  --bg-hover:       #252540;
+
+  /* — Brand — */
+  --brand:          #7b5ef8;
+  --brand-light:    #a48bfb;
+  --brand-dim:      rgba(123,94,248,0.15);
+  --brand-border:   rgba(123,94,248,0.35);
+  --teal:           #00d4aa;
+  --teal-dim:       rgba(0,212,170,0.12);
+  --coral:          #ff5f7e;
+  --amber:          #f5a623;
+  --sky:            #38bdf8;
+
+  /* — Text — */
+  --text-primary:   #eeeef8;
+  --text-secondary: #9090b8;
+  --text-muted:     #5a5a7a;
+  --text-disabled:  #3a3a55;
+
+  /* — Borders — */
+  --border:         rgba(255,255,255,0.07);
+  --border-md:      rgba(255,255,255,0.12);
+  --border-hi:      rgba(255,255,255,0.18);
+
+  /* — Semantic — */
+  --success:        #00d4aa;
+  --danger:         #ff5f7e;
+  --warning:        #f5a623;
+  --info:           #38bdf8;
+
+  /* — Radius — */
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  14px;
+  --r-xl:  20px;
+  --r-full: 9999px;
+
+  /* — Transitions — */
+  --ease:  cubic-bezier(0.4, 0, 0.2, 1);
+  --fast:  0.15s;
+  --med:   0.25s;
+  --slow:  0.4s;
+
+  /* — Shadows — */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,0.6);
+  --glow:       0 0 24px rgba(123,94,248,0.3);
+
+  /* — Layout — */
+  --sidebar-w: 220px;
+  --topbar-h:  58px;
+  --grid-gap:  12px;
+  --grid-cols: repeat(4, 1fr);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+img { display: block; max-width: 100%; }
+ul { list-style: none; }
+
+/* ── Typography ── */
+.font-display { font-family: 'Syne', sans-serif; }
+h1 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 700; }
+h2 { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; }
+h3 { font-size: 1rem; font-weight: 600; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-overlay); border-radius: var(--r-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--bg-hover); }
+
+/* ── Selection ── */
+::selection { background: var(--brand-dim); color: var(--brand-light); }
+
+/* ── Focus ring ── */
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--r-sm); }
